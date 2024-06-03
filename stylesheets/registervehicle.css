@@ -1,0 +1,173 @@
+/* Reset some default styles */
+body, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /*background: linear-gradient(to bottom, #0074d9, #7FDBFF); */
+    background-color: #ECE3CE;
+    display: flex;
+    background-size: cover; /* Adjust the background image size */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    backdrop-filter: blur(10px);
+    justify-content: center; /* Center horizontally */
+    align-items:flex-start; /* Center vertically */
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    height: 100%;   
+    padding-top: 45px;
+    background-color: #739072;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    transition: left 0.3s;
+}
+
+.sidebar .logo {
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #8cbaff;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: background-color 0.2s;
+    font-weight: normal;
+}
+
+.sidebar ul li a:hover {
+    background-color: #acc7ff;
+    font-size: 22px;
+    font-weight: bold;
+}
+/* Set the background image for the menu button */
+.menu-btn {
+    width: 35px;
+    height: 35px;
+    background-image: url('menubtn.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Other button styles if needed */
+
+
+/* Content Styles */
+.content {
+    margin-top: -25px;
+    margin-left: 0;
+    transition: margin-left 0.3s;
+}
+
+/* Button to toggle the sidebar */
+#toggleSidebar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.content.active {
+    margin-left: 250px;
+}
+.content {
+    display: flex;
+    margin-top: 0px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+    transition: margin-left 0.3s;
+    padding: 20px;
+}
+.registration-form {
+    background-color: rgba(255, 255, 255, 0.388);
+    height:auto;
+    padding: 40px 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+h1 {
+    text-align: center;
+    font-size: 30px;
+}
+.driverh1{
+    text-align: center;
+    font-size: 30px;
+}
+
+h2{
+    text-align: center;
+    font-size: 30px;
+}
+
+.registration-form h2 {
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    background-color: transparent;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #3d3d3d;
+    border-radius: 4px;
+}
+
+.registration-form button {
+    background-color: #3A4D39;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-top: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+.registration-form button:hover {
+    background-color: #739072;
+}
+#vehicleStatus{
+    background-color: transparent;
+}

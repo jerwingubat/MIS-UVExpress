@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <title>Attendance</title>
+</head>
+
+<body>
+    <style>
+        .homeIcon {
+            height: 17px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item .homeIcon {
+            margin-right: 10px;
+        }
+
+        .vehicleIcon {
+            height: 17px;
+        }
+
+        .list-item .vehicleIcon {
+            margin-right: 10px
+        }
+
+        .registerIcon {
+            height: 17px;
+        }
+
+        .list-item .registerIcon {
+            margin-right: 10px;
+        }
+
+        .driversIcon {
+            height: 17px;
+        }
+
+        .list-item .driversIcon {
+            margin-right: 10px;
+        }
+
+        .logoutIcon {
+            height: 17px;
+        }
+
+        .list-item .logoutIcon {
+            margin-right: 10px;
+        }
+
+        .bgimage {
+            width: 100%;
+            height: 100vh;
+            background-image: url('indexbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            padding-top: 45px;
+            background-color: #739072;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .registered-drivers {
+            text-align: center;
+            margin: 0 auto;
+            width: 80%;
+            /* Adjust the width as needed */
+            padding: 20px;
+            background-color: #f5f5f5;
+            /* Add a background color if desired */
+            border-radius: 5px;
+            /* Add rounded corners if desired */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Add a box shadow if desired */
+            margin-top: 40px;
+        }
+
+        .attendance-table-container {
+            text-align: center;
+            margin: 0 auto;
+            width: 80%;
+            padding: 20px;
+            background-color: #739072;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            overflow: scroll;
+
+        }
+
+        .attendance-table-container::-webkit-scrollbar {
+            width: 0.0em;
+            background-color: #F5F5F5;
+        }
+
+        .attendance-table-container::-webkit-scrollbar-thumb {
+            background-color: #000;
+        }
+
+        /* Style the table within the container */
+        #driversTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            /* Adjust the margin as needed */
+        }
+
+        #driversTable th,
+        #driversTable td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        #driversTable th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        #driversTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #driversTable tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .delete-button {
+            background-color: #F23A3A;
+            color: white;
+            height: 35px;
+            width: 70px;
+            border: none;
+            border-radius: 5px
+        }
+
+        p {
+            margin-top: 60px;
+        }
+        h1{
+            text-align: center;
+            font-size: 45px;
+        }
+    </style>
+    <p></p>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class="list-item">
+                <img src="home.png" alt="Home Icon" class="homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+              </li>
+            <li class="list-item">
+                <img src="car.png" alt="Vehicle Icon" class="vehicleIcon">
+                <a href="vehicles.html">Vehicles</a>
+            </li>
+            <li class="list-item">
+                <img src="car.png" alt="Vehicle Icon" class="vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class="list-item">
+                <img src="register.png" alt="Register Icon" class="registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class="list-item">
+                <img src="drivers.png" alt="Add Driver Icon" class="driversIcon">
+                <a href="addDriver.html?">Add Driver</a>
+            </li>
+            <li class="list-item">
+                <img src="drivers.png" alt="Drivers Icon" class="driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class="list-item">
+                <img src="maintenance.png" alt="Drivers Icon" class="driversIcon">
+                <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="#">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="absent.html">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="logout.png" alt="Logout Icon" class="logoutIcon">
+                <a href="#" id="logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+    </div>
+    <div class="attendance-table-container">
+        <div id="filterContainer">
+            <label for="filterDate">Filter by Date:</label>
+            <input type="date" id="filterDate">
+            <button id="filterBtn">Filter</button>
+            <button id="exportBtn">Download Report</button>
+        </div>
+        <p id="totalCount">Total Items:</p>
+        <h1>Drivers Attendance</h1>
+        <table id="driversTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+                    <th>Name</th>
+                    <!-- Add other header columns as needed -->
+                </tr>
+            </thead>
+            <tbody id="driversTableBody">
+                <!-- Data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+                alert('Logout Successful')
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let totalItemsCount = 0;
+
+
+        const filterBtn = document.getElementById('filterBtn');
+        const filterDateInput = document.getElementById('filterDate');
+
+        filterBtn.addEventListener('click', () => {
+            const selectedDate = filterDateInput.value;
+
+            if (selectedDate) {
+                filterTableByDate(selectedDate);
+            } else {
+                // If no date is selected, display all records
+                displayDispatchRecords();
+            }
+        });
+        function filterTableByDate(selectedDate) {
+            const driversTableBody = document.getElementById('driversTableBody');
+
+            const driversAttendanceRef = ref(db, 'driversAttendance');
+
+            onValue(driversAttendanceRef, (snapshot) => {
+                driversTableBody.innerHTML = '';
+
+                snapshot.forEach((dateSnapshot) => {
+                    const date = dateSnapshot.key;
+
+                    if (date === selectedDate) {
+                        dateSnapshot.forEach((timeSnapshot) => {
+                            const time = timeSnapshot.key;
+
+                            timeSnapshot.forEach((nameSnapshot) => {
+                                const name = nameSnapshot.key;
+                                const driverData = nameSnapshot.val();
+                                const timeOut = driverData.timeOut;
+                                
+
+                                const row = document.createElement('tr');
+
+                                // Check if timeOut exists and has a value
+                                if (timeOut) {
+                                    row.innerHTML = `
+                                    <td>${date}</td>
+                                    <td>${time}</td>
+                                    <td>${timeOut}</td>
+                                    <td>${name}</td>
+                                    <!-- Add other fields as needed -->
+                                `;
+                                } else {
+                                    // If timeOut is not set, assume "On duty"
+                                    row.innerHTML = `
+                                    <td>${date}</td>
+                                    <td>${time}</td>
+                                    <td>On duty</td>
+                                    <td>${name}</td>
+                                    <!-- Add other fields as needed -->
+                                `;
+                                }
+                                totalItemsCount++;
+                                driversTableBody.appendChild(row);
+                            });
+                        });
+                    }
+                });
+                document.getElementById('totalCount').innerText = `Total Items: ${totalItemsCount}`;
+            });
+        }
+        function updateTotalItemCount(count) {
+            document.getElementById('totalCount').innerText = `Total Items: ${count}`;
+        }
+        
+        function displayRegisteredDrivers() {
+
+            const driversTableBody = document.getElementById('driversTableBody');
+
+            const vehicleRef = ref(db, 'driverRegForm');
+
+            onValue(vehicleRef, (snapshot) => {
+                driversTableBody.innerHTML = '';
+                const itemsToDelete = [];
+
+                snapshot.forEach((childSnapshot) => {
+                    const driversData = childSnapshot.val();
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                <td>${driversData.driver_name}</td>
+                <td>${driversData.license_number}</td>
+                <td>${driversData.driver_age}</td>
+                <td>${driversData.driver_address}</td>
+                <td>
+                    <button data-vehicle-id="${childSnapshot.key}" data-plate-number="${driversData.license_number}" class="delete-button">View Records</button>
+                </td>
+              `;
+
+                    const deleteButton = row.querySelector('.delete-button');
+                    deleteButton.addEventListener('click', () => {
+                        const licenseNumberToDelete = deleteButton.getAttribute('data-plate-number');
+                        const vehicleRef = firebase.database().ref('driverRegForm');
+
+                        // Find the vehicle record by plate number and delete it from Firebase
+                        vehicleRef.orderByChild('license_number').equalTo(licenseNumberToDelete).once('value', (snapshot) => {
+                            if (snapshot.exists()) {
+                                snapshot.forEach((childSnapshot) => {
+                                    const vehicleKeyToDelete = childSnapshot.key;
+
+                                    // Delete the license number node using the key
+                                    vehicleRef.child(vehicleKeyToDelete).remove()
+                                        .then(() => {
+                                            console.log(`Driver with License Number ${licenseNumberToDelete} deleted successfully.`);
+                                        })
+                                        .catch((error) => {
+                                            console.error(`Error deleting vehicle: ${license}`);
+                                        });
+                                });
+                            } else {
+                                console.error(`No vehicle found with plate number ${licenseNumberToDelete}`);
+                            }
+                        });
+                    });
+                    driversTableBody.appendChild(row);
+                });
+            });
+        }
+        function displayDriversAttendance() {
+            
+            const driversTableBody = document.getElementById('driversTableBody');
+
+            const driversAttendanceRef = ref(db, 'driversAttendance');
+
+            onValue(driversAttendanceRef, (snapshot) => {
+                driversTableBody.innerHTML = '';
+                let totalItemsCount = 0;
+
+                snapshot.forEach((dateSnapshot) => {
+                    const date = dateSnapshot.key;
+
+                    dateSnapshot.forEach((timeSnapshot) => {
+                        const time = timeSnapshot.key;
+
+                        timeSnapshot.forEach((nameSnapshot) => {
+                            const name = nameSnapshot.key;
+                            const driverData = nameSnapshot.val();
+                            const timeOut = driverData.timeOut;
+
+                            const row = document.createElement('tr');
+
+                            // Check if timeOut exists and has a value
+                            if (timeOut) {
+                                row.innerHTML = `
+                            <td>${date}</td>
+                            <td>${time}</td>
+                            <td>${timeOut}</td>
+                            <td>${name}</td>
+                            
+                            <!-- Add other fields as needed -->
+                        `;
+                            } else {
+                                // If timeOut is not set, assume "On duty"
+                                row.innerHTML = `
+                            <td>${date}</td>
+                            <td>${time}</td>
+                            <td>On duty</td>
+                            <td>${name}</td>
+                            
+                            <!-- Add other fields as needed -->
+                        `;
+                            }
+
+                            totalItemsCount++; 
+                            driversTableBody.appendChild(row);
+                        });
+                    });
+                });
+                 updateTotalItemCount(totalItemsCount);
+            });
+            document.getElementById('totalCount').innerText = `Total Items: ${totalItemsCount}`;
+        }
+
+        
+        window.addEventListener('load', () => {
+            displayDriversAttendance(); // Initial display on page load
+            updateTotalItemCount(); // Initial display of total count
+        });
+
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            exportTableToExcel('driversTable', 'DriversAttendance');
+        });
+
+        function exportTableToExcel(tableId, filename = 'exported_data') {
+            const table = document.getElementById(tableId);
+            const ws = XLSX.utils.table_to_sheet(table);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+            XLSX.writeFile(wb, `${filename}.xlsx`);
+        }
+
+
+
+
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
+    <script src="regvehicledb.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

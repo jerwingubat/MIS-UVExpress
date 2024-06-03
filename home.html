@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <title>Management Information System</title>
+</head>
+
+<body>
+    <style>
+        .homeIcon {
+            height: 17px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item .homeIcon {
+            margin-right: 10px;
+        }
+
+        .vehicleIcon {
+            height: 17px;
+        }
+
+        .list-item .vehicleIcon {
+            margin-right: 10px
+        }
+
+        .registerIcon {
+            height: 17px;
+        }
+
+        .list-item .registerIcon {
+            margin-right: 10px;
+        }
+
+        .driversIcon {
+            height: 17px;
+        }
+
+        .list-item .driversIcon {
+            margin-right: 10px;
+        }
+
+        .logoutIcon {
+            height: 17px;
+        }
+
+        .list-item .logoutIcon {
+            margin-right: 10px;
+        }
+
+        .bgimage {
+            width: 100%;
+            height: 100vh;
+            background-image: url('indexbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+            margin-top: 40px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* Set the background image for the menu button */
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .barChartContainer {
+            margin-top: 25px;
+            flex-direction: column;
+            height: 230px;
+            width: 900px;
+            margin: 25px auto;
+        }
+
+        #downloadBtn {
+            color: black;
+            background-color: #739072;
+        }
+
+        .tableContainer {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        #totalsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #totalsTable th,
+        #totalsTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #totalsTable th {
+            background-color: #f2f2f2;
+        }
+
+        #totalsTable tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <!--<div class="slider">-->
+    <!--    <img id="img-1" src="indexbg.jpg" alt="Image 1" />-->
+    <!--    <img id="img-2" src="indexbg2.jpg" alt="Image 2" />-->
+    <!--    <img id="img-3" src="indexbg3.jpg" alt="Image 3" />-->
+    <!--</div>-->
+    <!--<div class="navigation-button">-->
+    <!--    <span class="dot active" onclick="changeSlide(0)"></span>-->
+    <!--    <span class="dot" onclick="changeSlide(1)"></span>-->
+    <!--    <span class="dot" onclick="changeSlide(2)"></span>-->
+    <!--</div>-->
+
+    <div class="barChartContainer">
+        <canvas id="passengerChart" width="500" height="100"></canvas>
+        <button id="downloadBtn" onclick="downloadPassengerExcel()">Download Report</button>
+    </div>
+    <div class="barChartContainer">
+        <canvas id="myBarChart" width="500" height="100"></canvas>
+        <button id="downloadBtn" onclick="downloadExcel()">Download Report</button>
+    </div>
+    <div class="barChartContainer">
+        <canvas id="routeTallyChart" width="500" height="100"></canvas>
+        <button id="downloadBtn" onclick="downloadRouteExcel()">Download Report</button>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+
+        <div class="logo">Management System</div>
+        <ul>
+            <li class="list-item">
+                <img src="home.png" alt="Home Icon" class="homeIcon">
+                <a href="#">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+            </li>
+            <li class="list-item">
+                <img src="car.png" alt="Vehicle Icon" class="vehicleIcon">
+                <a href="vehicles.html">Vehicles</a>
+            </li>
+            <li class="list-item">
+                <img src="car.png" alt="Vehicle Icon" class="vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class="list-item">
+                <img src="register.png" alt="Register Icon" class="registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class="list-item">
+                <img src="drivers.png" alt="Add Driver Icon" class="driversIcon">
+                <a href="addDriver.html?">Add Driver</a>
+            </li>
+            <li class="list-item">
+                <img src="drivers.png" alt="Drivers Icon" class="driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class="list-item">
+                <img src="maintenance.png" alt="Drivers Icon" class="driversIcon">
+                <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="absent.html">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="logout.png" alt="Logout Icon" class="logoutIcon">
+                <a href="#" id="logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <button id="toggleSidebarHome" class="menu-btn"></button>
+    </div>
+
+    <script>
+
+    </script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const ctx = document.getElementById('myBarChart').getContext('2d');
+            const myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+            });
+
+            const routeCtx = document.getElementById('routeTallyChart').getContext('2d');
+            const routeChart = new Chart(routeCtx, {
+                type: 'bar',
+                data: routeChartData,
+            });
+            const passengerCtx = document.getElementById('passengerChart').getContext('2d');
+            const passengerChart = new Chart(passengerCtx, {
+                type: 'bar',
+                data: passengerChartData,
+            });
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                auth.signOut().then(() => {
+                    window.location.href = 'index.html';
+                    alert('Logout Successful')
+                }).catch((error) => {
+                    console.error('Logout error:', error);
+                });
+            });
+
+
+            // Assuming you have a Firebase reference
+            //const firebaseRef = firebase.database().ref('bookedTime');
+            //const firebaseRouteRef = firebase.database().ref('routeTally');
+
+            // Assuming you have a Firebase reference
+            const firebaseRef = firebase.database().ref('qrCodeItems');
+
+            // Listen for changes in the Firebase data
+            firebaseRef.on('value', function (snapshot) {
+                const seatCountsByHour = Array(24).fill(0);
+
+                // Iterate over each time in the snapshot
+                snapshot.forEach(function (timeSnapshot) {
+                    const time = timeSnapshot.key;
+
+                    // Iterate over each seatNumber in the time snapshot
+                    timeSnapshot.forEach(function (seatSnapshot) {
+                        const seatNumber = seatSnapshot.key;
+                        const selectedTime = seatSnapshot.child('selectedTime').val();
+
+                        // Check if selectedTime is defined and in the expected format
+                        if (selectedTime && typeof selectedTime === 'string' && selectedTime.includes(':')) {
+                            const hour = parseInt(selectedTime.split(':')[0], 10);
+                            console.log(`Time: ${time}, Seat Number: ${seatNumber}, Selected Time: ${selectedTime}`);
+
+                            // Increment the count for the current hour
+                            seatCountsByHour[hour]++;
+                        }
+                    });
+                });
+
+                // Update the chart data with the number of seats booked for each hour
+                chartData.labels = Array.from({ length: 24 }, (_, i) => i); // Labels are hours 0-23
+                chartData.datasets[0].data = seatCountsByHour;
+
+                // Update the chart with the new data
+                myBarChart.update();
+            });
+
+
+
+
+            firebaseRef.on('value', function (snapshot) {
+                const seatCountsByHour = Array(24).fill(0);
+
+                // Iterate over each time in the snapshot
+                snapshot.forEach(function (timeSnapshot) {
+                    // Iterate over each seatNumber under the current time
+                    timeSnapshot.forEach(function (seatSnapshot) {
+                        const time = seatSnapshot.child('time').val();
+
+                        // Check if time is defined and in the expected format
+                        if (time && typeof time === 'string' && time.includes(':')) {
+                            const hour = parseInt(time.split(':')[0], 10);
+                            console.log(`Time: ${time}, Seat Number: ${seatSnapshot.key}, Booked Time: ${time}`);
+
+                            // Increment the count for the current hour
+                            seatCountsByHour[hour]++;
+                        }
+                    });
+                });
+
+                // Update the chart data with the number of seats booked for each hour
+                passengerChartData.labels = Array.from({ length: 24 }, (_, i) => i); // Labels are hours 0-23
+                passengerChartData.datasets[0].data = seatCountsByHour;
+
+                // Update the chart with the new data
+                passengerChart.update();
+            });
+
+            const firebaseUsersRef = firebase.database().ref('users');
+
+            firebaseUsersRef.on('value', function (usersSnapshot) {
+                const routeCounts = {};
+
+                // Iterate over each user in the snapshot
+                usersSnapshot.forEach(function (userSnapshot) {
+                    // Check if the user has reservedSeats
+                    const reservedSeatsSnapshot = userSnapshot.child('reservedSeats');
+
+                    if (reservedSeatsSnapshot.exists()) {
+                        // Iterate over each reserved seat
+                        reservedSeatsSnapshot.forEach(function (seatSnapshot) {
+                            const selectedRoute = seatSnapshot.child('selectedRoute').val();
+
+                            // Check if selectedRoute is not null
+                            if (selectedRoute !== null) {
+                                // Increment the count for the selectedRoute
+                                routeCounts[selectedRoute] = (routeCounts[selectedRoute] || 0) + 1;
+                            }
+                        });
+                    }
+                });
+
+                // Update the chart data with the route tally
+                routeChartData.labels = Object.keys(routeCounts);
+                routeChartData.datasets[0].data = Object.values(routeCounts);
+
+                // Update the chart with the new data
+                routeChart.update();
+            });
+
+
+        });
+
+        let passengerChartData = {
+            labels: [],
+            datasets: [{
+                label: "Most Ticket Sold per Time",
+                backgroundColor: "rgba(250, 112, 112, 0.5)",
+                borderColor: "rgba(250, 112, 112, 2)",
+                borderWidth: 2,
+                data: [],
+            }],
+        };
+        let chartData = {
+            labels: [],
+            datasets: [{
+                label: "Tickets Sold per Time Slot",
+                backgroundColor: "rgba(115, 144, 114, 0.5)",
+                borderColor: "rgba(115, 144, 114, 2)",
+                borderWidth: 2,
+                data: [],
+            }],
+        };
+        let routeChartData = {
+            labels: [],
+            datasets: [{
+                label: "Total Bookings per Route",
+                backgroundColor: "rgba(115, 114, 144, 0.5)",
+                borderColor: "rgba(115, 114, 144, 2)",
+                borderWidth: 2,
+                data: [],
+            }],
+        };
+        function downloadExcel() {
+            if (!chartData || !chartData.labels || !chartData.labels.length ||
+                !chartData.datasets || !chartData.datasets.length ||
+                !chartData.datasets[0] || !chartData.datasets[0].data || !chartData.datasets[0].data.length) {
+                console.error('Invalid chartData:', chartData);
+                return;
+            }
+
+            const labels = chartData.labels;
+            const data = chartData.datasets[0].data;
+
+            // Prepare Excel data with headers
+            const excelData = [['Time Slot', 'Total Booking']];
+
+            // Populate data
+            labels.forEach((label, index) => {
+                const timeSlot = `${label}:00 - ${label + 1}:00`;
+                const totalBooking = data[index];
+                excelData.push([timeSlot, totalBooking]);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Booking Summary");
+
+            XLSX.writeFile(wb, 'booking_summary.xlsx');
+        }
+
+
+        function downloadPassengerExcel() {
+            if (!chartData || !chartData.labels || !chartData.labels.length ||
+                !chartData.datasets || !chartData.datasets.length ||
+                !chartData.datasets[0] || !chartData.datasets[0].data || !chartData.datasets[0].data.length) {
+                console.error('Invalid chartData:', chartData);
+                return;
+            }
+
+            const labels = chartData.labels;
+            const data = chartData.datasets[0].data;
+
+            // Prepare Excel data with headers
+            const excelData = [['Time Slot', 'Total Booking']];
+
+            // Populate data
+            labels.forEach((label, index) => {
+                const timeSlot = `${label}:00 - ${label + 1}:00`;
+                const totalBooking = data[index];
+                excelData.push([timeSlot, totalBooking]);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Booking Summary");
+
+            XLSX.writeFile(wb, 'passenger_tally_summary.xlsx');
+        }
+
+        // Add the downloadRouteExcel function
+        function downloadRouteExcel() {
+            if (!routeChartData || !routeChartData.labels || !routeChartData.labels.length ||
+                !routeChartData.datasets || !routeChartData.datasets.length ||
+                !routeChartData.datasets[0] || !routeChartData.datasets[0].data || !routeChartData.datasets[0].data.length) {
+                console.error('Invalid routeChartData:', routeChartData);
+                return;
+            }
+
+            const labels = routeChartData.labels;
+            const data = routeChartData.datasets[0].data;
+
+            // Prepare Excel data with headers
+            const excelData = [['Route', 'Total Tally']];
+
+            // Populate data
+            labels.forEach((label, index) => {
+                const route = label;
+                const totalTally = data[index];
+                excelData.push([route, totalTally]);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Route Tally Summary");
+
+            XLSX.writeFile(wb, 'route_tally_summary.xlsx');
+        }
+
+
+
+
+
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
+    <script src="regvehicledb.js"></script>
+    <script src="scriptHome.js"></script>
+</body>
+
+</html>

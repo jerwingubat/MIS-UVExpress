@@ -1,0 +1,39 @@
+/* Reset some default styles */
+body, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /*background: linear-gradient(to bottom, #0074d9, #7FDBFF); /* Gradient from blue to sky blue */
+    background-color: #ECE3CE;
+    background-size: cover; /* Adjust the background image size */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    backdrop-filter: blur(10px); /* Optional blur effect */
+    overflow: hidden;
+}
+
+
+/* Content Styles */
+.content {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+}
+
+/* Button to toggle the sidebar */
+#toggleSidebar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+/* Expand the sidebar when active */
+.sidebar.active {
+    left: 0;
+}
+
+.content.active {
+    margin-left: 250px;
+}

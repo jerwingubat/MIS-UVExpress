@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/registervehicle.css">
+
+    <title>Vehicle Registration</title>
+</head>
+<body>
+    <style>
+        .homeIcon{
+            height: 17px;
+        }
+        .list-item{
+            display: flex;
+            align-items: center;
+        }
+        .list-item .homeIcon{
+            margin-right: 10px;
+        }
+        .vehicleIcon{
+            height: 17px;
+        }
+        .list-item .vehicleIcon{
+            margin-right: 10px
+        }
+        .registerIcon{
+            height: 17px;
+        }
+        .list-item .registerIcon{
+            margin-right: 10px;
+        }
+        .driversIcon{
+            height: 17px;
+        }
+        .list-item .driversIcon{
+            margin-right: 10px;
+        }
+        .logoutIcon{
+            height: 17px;
+        }
+        .list-item .logoutIcon{
+            margin-right: 10px;
+        }
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+        
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class = "list-item">
+                <img src="home.png" alt="Home Icon" class = "homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+              </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="vehicles.html?">Vehicles</a>
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "register.png" alt = "Register Icon" class = "registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Add Driver Icon" class = "driversIcon">
+                <a href = "#">Add Driver</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class = "list-item">
+                <img src = "maintenance.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="absent.html">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class = "list-item">
+                <img src = "logout.png" alt = "Logout Icon" class = "logoutIcon">
+                <a href="#" id = "logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+        <h1 class = "driverh1">Driver Registration</h1>
+        
+        <div class="registration-form">
+            <h2>Driver Registration Form</h2>
+            <form id="driverRegForm">
+                <div class="form-group">
+                    <label for="driverName">Driver Name:</label>
+                    <input type="text" id="driverName" name="driverName" style="text-transform: uppercase;" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverName">License Number:</label>
+                    <input type="text" id="licenseNumber" name="driverName" style="text-transform: uppercase;" required>
+                </div>
+                <div class="form-group">
+                    <label for="plateNumber">Age</label>
+                    <input type="number" id="driverAge" name="driverAge" min="18" max = "65" style="text-transform: uppercase;"  required>
+                </div>
+                <div class="form-group">
+                    <label for="driverAddress">Address:</label>
+                    <input type="text" id="driverAddress" name="driverAddress" style="text-transform: uppercase;" required>
+                </div>
+                <button type="submit" id="driverSubmitButton">Register</button>
+            </form> 
+        </div>
+    </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            auth.signOut().then(() => {
+            window.location.href = 'index.html';
+            alert('Logout Successful')
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+    </script>
+    <script type = "module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+    </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src = "addDriverdb.js"></script>
+    <script src="registervehicle.js"></script>
+</body>
+</html>

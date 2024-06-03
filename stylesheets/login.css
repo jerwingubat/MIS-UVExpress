@@ -1,0 +1,94 @@
+/* Basic styles for the login UI */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /*background: linear-gradient(to bottom, #0074d9, #7FDBFF);*/
+    display: flex;
+    background-size: cover; /* Adjust the background image size */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    backdrop-filter: blur(10px);
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh;
+    margin: 0;
+}
+
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.272);
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(3, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2 {
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+    padding-right: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: black
+}
+
+input[type="text"],
+input[type="password"] {
+    background-color:transparent;
+    opacity: 0.8px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #3A4D39;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #3A4D39;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #739072;
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+.show-password-label {
+    font-size: 14px;
+    color:black
+}
+.loader {
+    border: 8px solid #ECE3CE;
+    border-top: 8px solid #739072;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-animation {
+    display: none;
+    font-size: 24px;
+    margin-top: 20px;
+}

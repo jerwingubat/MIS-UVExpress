@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <title>Management Information System</title>
+</head>
+
+<body>
+    <style>
+        .homeIcon {
+            height: 17px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item .homeIcon {
+            margin-right: 10px;
+        }
+
+        .vehicleIcon {
+            height: 17px;
+        }
+
+        .list-item .vehicleIcon {
+            margin-right: 10px
+        }
+
+        .registerIcon {
+            height: 17px;
+        }
+
+        .list-item .registerIcon {
+            margin-right: 10px;
+        }
+
+        .driversIcon {
+            height: 17px;
+        }
+
+        .list-item .driversIcon {
+            margin-right: 10px;
+        }
+
+        .logoutIcon {
+            height: 17px;
+        }
+
+        .list-item .logoutIcon {
+            margin-right: 10px;
+        }
+
+        .bgimage {
+            width: 100%;
+            height: 100vh;
+            background-image: url('indexbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+            margin-top: 40px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* Set the background image for the menu button */
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .barChartContainer {
+            margin-top: 25px;
+            flex-direction: column;
+            height: fit-content;
+            width: 900px;
+            margin: 25px auto;
+        }
+
+        #downloadBtn {
+            color: black;
+            background-color: #739072;
+        }
+    </style>
+    <!--<div class="slider">-->
+    <!--    <img id="img-1" src="indexbg.jpg" alt="Image 1" />-->
+    <!--    <img id="img-2" src="indexbg2.jpg" alt="Image 2" />-->
+    <!--    <img id="img-3" src="indexbg3.jpg" alt="Image 3" />-->
+    <!--</div>-->
+    <!--<div class="navigation-button">-->
+    <!--    <span class="dot active" onclick="changeSlide(0)"></span>-->
+    <!--    <span class="dot" onclick="changeSlide(1)"></span>-->
+    <!--    <span class="dot" onclick="changeSlide(2)"></span>-->
+    <!--</div>-->
+
+    <div class="barChartContainer">
+        <canvas id="myBarChart" width="500" height="100"></canvas>
+        <button id="downloadBtn" onclick="downloadExcel()">Download Report</button>
+    </div>
+    <div class="barChartContainer">
+        <canvas id="routeTallyChart" width="500" height="100"></canvas>
+        <button id="downloadBtn" onclick="downloadRouteExcel()">Download Report</button>
+    </div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+
+        <div class="logo">Management System</div>
+        <ul>
+            <li class="list-item">
+                <img src="home.png" alt="Home Icon" class="homeIcon">
+                <a href="#">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="teller-driver-attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch-teller.html">Dispatch Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="logout.png" alt="Logout Icon" class="logoutIcon">
+                <a href="#" id="logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <button id="toggleSidebarHome" class="menu-btn"></button>
+    </div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById('myBarChart').getContext('2d');
+            const myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+            });
+
+            const routeCtx = document.getElementById('routeTallyChart').getContext('2d');
+            const routeChart = new Chart(routeCtx, {
+                type: 'bar',
+                data: routeChartData,
+            });
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+            // Assuming you have a Firebase reference
+            const firebaseRef = firebase.database().ref('availableSeats');
+            const firebaseRouteRef = firebase.database().ref('routeTally');
+            const auth = firebase.auth();
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                // Add a click event listener to the logout button
+                logoutBtn.addEventListener('click', function () {
+                    // Log the execution to the console for debugging
+                    console.log('Logout button clicked');
+
+                    // Sign out the user
+                    auth.signOut().then(() => {
+                        // Redirect to the index.html page
+                        window.location.href = 'index.html';
+                        // Show an alert (consider using a more user-friendly UI)
+                        alert('Logout Successful');
+                    }).catch((error) => {
+                        // Log any errors to the console
+                        console.error('Logout error:', error);
+                    });
+                });
+            } else {
+                // Log a message to the console if the logoutBtn element is not found
+                console.error('Logout button not found');
+            }
+
+            // Listen for changes in the Firebase data
+            firebaseRef.on('value', function (snapshot) {
+                const seatCountsByHour = Array(24).fill(0);
+
+                // Iterate over each child in the snapshot
+                snapshot.forEach(function (seatSnapshot) {
+                    // Iterate over each seat
+                    seatSnapshot.child('seats').forEach(function (seat) {
+                        const bookedTime = seat.val().bookedTime;
+
+                        // Check if bookedTime is defined and in the expected format
+                        if (bookedTime && typeof bookedTime === 'string' && bookedTime.includes(':')) {
+                            // Extract the hour from the bookedTime
+                            const hour = parseInt(bookedTime.split(':')[0], 10);
+                            console.log(`Booked Time: ${bookedTime}`);
+
+                            // Increment the count for the current hour
+                            seatCountsByHour[hour]++;
+                        }
+                    });
+                });
+
+                // Update the chart data with the number of seats booked for each hour
+                chartData.labels = Array.from({ length: 24 }, (_, i) => i); // Labels are hours 0-23
+                chartData.datasets[0].data = seatCountsByHour;
+
+                // Update the chart with the new data
+                myBarChart.update();
+            });
+
+            firebaseRouteRef.on('value', function (snapshot) {
+                const routeCounts = [];
+
+                // Iterate over each child in the snapshot
+                snapshot.forEach(function (routeSnapshot) {
+                    const routeName = routeSnapshot.key;
+                    const routeCount = routeSnapshot.val();
+
+                    routeCounts.push(routeCount);
+                });
+
+                // Update the chart data with the route tally
+                routeChartData.labels = Object.keys(snapshot.val() || {});
+                routeChartData.datasets[0].data = routeCounts;
+
+                // Update the chart with the new data
+                routeChart.update();
+            });
+        });
+
+        let chartData = {
+            labels: [],
+            datasets: [{
+                label: "Tickets Sold per Time Slot",
+                backgroundColor: "rgba(115, 144, 114, 0.5)",
+                borderColor: "rgba(115, 144, 114, 2)",
+                borderWidth: 2,
+                data: [],
+            }],
+        };
+        let routeChartData = {
+            labels: [],
+            datasets: [{
+                label: "Total Bookings per Route",
+                backgroundColor: "rgba(115, 114, 144, 0.5)",
+                borderColor: "rgba(115, 114, 144, 2)",
+                borderWidth: 2,
+                data: [],
+            }],
+        };
+        // Add the downloadExcel function
+        function downloadExcel() {
+            if (!chartData || !chartData.labels || !chartData.labels.length ||
+                !chartData.datasets || !chartData.datasets.length ||
+                !chartData.datasets[0] || !chartData.datasets[0].data || !chartData.datasets[0].data.length) {
+                console.error('Invalid chartData:', chartData);
+                return;
+            }
+
+            const labels = chartData.labels;
+            const data = chartData.datasets[0].data;
+
+            // Prepare Excel data with headers
+            const excelData = [['Time Slot', 'Total Booking']];
+
+            // Populate data
+            labels.forEach((label, index) => {
+                const timeSlot = `${label}:00 - ${label + 1}:00`;
+                const totalBooking = data[index];
+                excelData.push([timeSlot, totalBooking]);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Booking Summary");
+
+            XLSX.writeFile(wb, 'booking_summary.xlsx');
+        }
+        // Add the downloadRouteExcel function
+        function downloadRouteExcel() {
+            if (!routeChartData || !routeChartData.labels || !routeChartData.labels.length ||
+                !routeChartData.datasets || !routeChartData.datasets.length ||
+                !routeChartData.datasets[0] || !routeChartData.datasets[0].data || !routeChartData.datasets[0].data.length) {
+                console.error('Invalid routeChartData:', routeChartData);
+                return;
+            }
+
+            const labels = routeChartData.labels;
+            const data = routeChartData.datasets[0].data;
+
+            // Prepare Excel data with headers
+            const excelData = [['Route', 'Total Tally']];
+
+            // Populate data
+            labels.forEach((label, index) => {
+                const route = label;
+                const totalTally = data[index];
+                excelData.push([route, totalTally]);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Route Tally Summary");
+
+            XLSX.writeFile(wb, 'route_tally_summary.xlsx');
+        }
+
+
+
+
+
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
+    <script src="scriptHome.js"></script>
+</body>
+
+</html>

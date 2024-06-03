@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
+    <link rel="stylesheet" href="stylesheets/addvehicle.css">
+    <title>Add Vehicle</title>
+</head>
+<script>
+    function closeAlert() {
+        // Add functionality to close the alert
+        document.getElementById('custom-alert').style.display = 'none';
+    }
+</script>
+<body>
+    <style>
+        .homeIcon{
+            height: 17px;
+        }
+        .list-item{
+            display: flex;
+            align-items: center;
+        }
+        .list-item .homeIcon{
+            margin-right: 10px;
+        }
+        .vehicleIcon{
+            height: 17px;
+        }
+        .list-item .vehicleIcon{
+            margin-right: 10px
+        }
+        .registerIcon{
+            height: 17px;
+        }
+        .list-item .registerIcon{
+            margin-right: 10px;
+        }
+        .driversIcon{
+            height: 17px;
+        }
+        .list-item .driversIcon{
+            margin-right: 10px;
+        }
+        .logoutIcon{
+            height: 17px;
+        }
+        .list-item .logoutIcon{
+            margin-right: 10px;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;   
+            padding-top: 45px;
+            background-color: #739072;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.3s;
+            margin-top: -50px;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+        
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        /* Set the background image for the menu button */
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .deploy-button {
+          background-color: #21BF73;
+          color: white;
+          height: 35px;
+          width: 70px;
+          border: none;
+          border-radius: 5px;
+        }
+        
+        .delete-button {
+          background-color: #F23A3A;
+          color: white;
+          height: 35px;
+          width: 70px;
+          border: none;
+          border-radius: 5px
+        }
+        #registered-vehicles{
+          margin-top: 30px;
+        }
+        #custom-alert {
+          position: fixed;
+          display: none;
+          top: 0%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #f8d7da;
+          border: 1px solid #f5c6cb;
+          padding: 10px;
+          border-radius: 5px;
+          width: 300px;
+          text-align: center;
+        }
+
+        .close-btn {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          cursor: pointer;
+        }
+
+        #alert-message {
+          margin: 0;
+        }
+    </style>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class = "list-item">
+                <img src="home.png" alt="Home Icon" class = "homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+              <img src="event.png" alt="Home Icon" class="homeIcon">
+              <a href="event_planner.html">Event Planner</a>
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="vehicles.html">Vehicles</a>
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="#">Add Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "register.png" alt = "Register Icon" class = "registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Add Driver Icon" class = "driversIcon">
+                <a href = "addDriver.html?">Add Driver</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class = "list-item">
+              <img src = "maintenance.png" alt = "Drivers Icon" class = "driversIcon">
+              <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+              <img src="report.png" alt="Drivers Icon" class="driversIcon">
+              <a href="attendance.html">Teller Attendance Record</a>
+          </li>
+          <li class="list-item">
+            <img src="report.png" alt="Drivers Icon" class="driversIcon">
+            <a href="absent.html">Absence Letters</a>
+          </li>
+          <li class="list-item">
+            <img src="report.png" alt="Drivers Icon" class="driversIcon">
+            <a href="dispatch.html">Dispatch Attendance Record</a>
+          </li>
+            <li class = "list-item">
+                <img src = "logout.png" alt = "Logout Icon" class = "logoutIcon">
+                <a href="#" id = "logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+   <div class="registered-vehicles">
+    <h2>Registered Vehicles</h2>
+    <table id="vehicleTable">
+        <thead>
+            <tr>
+                <th>Vehicle Model</th>
+                <th>Vehicle Plate Number</th>
+                <th>Seats Available</th>
+                <th>Status</th>
+                <th>Driver</th>
+                <th>Scheduled Time</th>
+                <th>Route</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="vehicleTableBody">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <select class="driver-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}" required>
+                      <!-- Options will be populated dynamically using JavaScript -->
+                  </select>
+                </td>
+                <td>
+                  <select class="scheduled-time-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}" required>
+                      <!-- Options will be populated dynamically using JavaScript -->
+                  </select>
+                </td>
+                <td>
+                  <select class="route-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}" required>
+                      <option value="Pasig">Pasig</option>
+                      <option value="Rosario">Rosario</option>
+                  </select>
+                </td>
+                <td>
+                  <button data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}" class="deploy-button">Deploy</button>
+                  <button data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}" class="delete-button">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+    </div>
+    <div id="custom-alert">
+      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <p id="alert-message"></p>
+    </div>
+    <script type = "module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+    const firebaseConfig = {
+    apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+    authDomain: "uvexpress-df56c.firebaseapp.com",
+    databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+    projectId: "uvexpress-df56c",
+    storageBucket: "uvexpress-df56c.appspot.com",
+    messagingSenderId: "58913712320",
+    appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  function displayRegisteredVehicles() {
+
+    const vehicleTableBody = document.getElementById('vehicleTableBody');
+    const vehicleRef = ref(db, 'vehicleRegForm');
+    
+    onValue(vehicleRef, (snapshot) => {
+      vehicleTableBody.innerHTML = '';
+      const itemsToDelete = [];
+      snapshot.forEach((childSnapshot) => {
+        const vehicleData = childSnapshot.val();
+        const vehicleKey = childSnapshot.key;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${vehicleData.model}</td>
+          <td>${vehicleData.plateNum}</td>
+          <td>${vehicleData.seatsAvail}</td>
+          <td>${vehicleData.vehicleStat}</td>
+          <td>
+            <select class="driver-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}">
+                <!-- Options will be populated dynamically using JavaScript -->
+            </select>
+          </td>
+          <td>
+            <select class="scheduled-time-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}">
+                <!-- Options will be populated dynamically using JavaScript -->
+            </select>
+          </td>
+          <td>
+                <select class="route-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}" required>
+                    <option value="Pasig">Pasig</option>
+                    <option value="Rosario">Rosario</option>
+                </select>
+          </td>
+          <td>
+            <button data-plate-number="${vehicleData.plateNum}" class="deploy-button">Deploy</button>
+            <button data-plate-number="${vehicleData.plateNum}" class="delete-button">Delete</button>
+          </td>
+            
+        `;
+        const scheduledTimeDropdown = row.querySelector('.scheduled-time-dropdown');
+        populateScheduledTimesDropdown(scheduledTimeDropdown, vehicleData.plateNum);
+
+
+        function populateDriverDropdown(driverDropdown, selectedDriverName) {
+          const driversRef = firebase.database().ref('driverRegForm');
+          
+          // Clear existing options
+          driverDropdown.innerHTML = '';
+          
+          // Retrieve drivers from Firebase and populate the dropdown
+          driversRef.once('value', (snapshot) => {
+              snapshot.forEach((childSnapshot) => {
+                  const driverData = childSnapshot.val();
+                  const driverName = driverData.driver_name;
+              
+                  const option = document.createElement('option');
+                  option.value = driverName;
+                  option.textContent = driverName;
+                  if (driverName === selectedDriverName) {
+                      option.selected = true; // Pre-select the driver if it matches the vehicle's driver
+                  }
+                
+                  driverDropdown.appendChild(option);
+              });
+          });
+        }
+        function populateScheduledTimesDropdown(dropdown, plateNum) {
+            const vehicleRegFormRef = firebase.database().ref(`vehicleRegForm/${plateNum}/scheduledTimes`);
+
+            // Clear existing options
+            dropdown.innerHTML = '';
+
+            // Retrieve scheduled times for the current plate number
+            vehicleRegFormRef.once('value', (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    const scheduledTime = childSnapshot.val();
+
+                    const option = document.createElement('option');
+                    option.value = scheduledTime;
+                    option.textContent = scheduledTime;
+
+                    dropdown.appendChild(option);
+                });
+            });
+        }
+    
+
+        const driverDropdown = row.querySelector('.driver-dropdown');
+        populateDriverDropdown(driverDropdown);
+        populateScheduledTimesDropdown(scheduledTimeDropdown);
+
+        const deployButton = row.querySelector('.deploy-button');
+        deployButton.addEventListener('click', () => {
+          const newVehicleStat = 'Deployed';
+          const vehicleStatRef = firebase.database().ref(`vehicleRegForm/${vehicleKey}/vehicleStat`);
+          const statusCell = row.querySelector('td:nth-child(4)');
+          const plateNum = vehicleData.plateNum;
+          const timeInput = row.querySelector('.time-input');
+          const selectedDriverName = driverDropdown.value;
+          const selectedScheduledTime = scheduledTimeDropdown.value;
+          const selectedRoute = row.querySelector('.route-dropdown').value;
+
+
+          if (vehicleData.vehicleStat === 'Not Available' || vehicleData.vehicleStat === 'Under Maintenance'||vehicleData.vehicleStat === 'Vehicle Coding') {
+            const alertMessage = document.getElementById('alert-message');
+            alertMessage.textContent = `Cannot deploy. Vehicle status is ${vehicleData.vehicleStat}.`;
+            document.getElementById('custom-alert').style.display = 'block';
+            return;
+          }
+          if (vehicleData.vehicleStat === 'Deployed') {
+            const alertMessage = document.getElementById('alert-message');
+            alertMessage.textContent = `Cannot deploy. Vehicle is already ${vehicleData.vehicleStat}.`;
+            document.getElementById('custom-alert').style.display = 'block';
+            return;
+          }
+
+          if (selectedDriverName.trim() === '') {
+            document.getElementById("custom-alert").style.display = "block";
+            return;
+          }
+
+          vehicleStatRef.set(newVehicleStat)
+            .then(() => {
+              console.log(`Vehicle with key ${vehicleKey} is deployed.`);
+            
+              // Create a reference to the deployedVehicles node
+              const deployedVehiclesRef = firebase.database().ref(`deployedVehicles/${plateNum}`);
+              const routeRef = firebase.database().ref(`deployedVehicles/${plateNum}/selectedRoute`);
+                    routeRef.set(selectedRoute)
+                    const routeTallyRef = firebase.database().ref(`routeTally/${selectedRoute}`);
+              const deployedText = document.createElement('span');
+              statusCell.textContent = newVehicleStat;
+
+                // Apply CSS classes based on the vehicleStat value
+                if (newVehicleStat === 'Available') {
+                  statusCell.classList.remove('red-text');
+                  statusCell.classList.add('green-text');
+                } else {
+                  statusCell.classList.remove('green-text');
+                  statusCell.classList.add('red-text');
+                }
+
+            
+              // Copy the deployed vehicle to deployedVehicles
+              deployedVehiclesRef.set({
+                model: vehicleData.model,
+                plateNum: vehicleData.plateNum,
+                seatsAvail: vehicleData.seatsAvail,
+                selectedDriver: selectedDriverName,
+                selectedScheduledTime: selectedScheduledTime,
+                selectedRoute:selectedRoute,
+                // Include other properties you want to transfer to the deployedVehicles node
+                
+              })
+              
+              const driversRef = firebase.database().ref('drivers');
+                driversRef.orderByChild('fname').equalTo(selectedDriverName).once('value')
+                  .then((snapshot) => {
+                    const driverSnapshot = snapshot.val();
+                  
+                    if (driverSnapshot) {
+                      // Assuming there is only one matching driver, get the uid
+                      const uid = Object.keys(driverSnapshot)[0];
+                    
+                      // Now, let's also associate the plateNum and selectedScheduledTime with the driver
+                      const driverRef = firebase.database().ref(`drivers/${uid}/${vehicleKey}`);
+                      driverRef.set({
+                        plateNum: vehicleData.plateNum,
+                        selectedScheduledTime: selectedScheduledTime,
+                        // Include other properties you want to associate with the driver
+                      })
+                      .then(() => {
+                        console.log(`Plate number and scheduled time associated with driver ${selectedDriverName}.`);
+                        alert(`Vehicle with key ${vehicleKey} is deployed.`);
+                      })
+                      .catch((error) => {
+                        console.error(`Error updating driver information: ${error}`);
+                      });
+                    } else {
+                      console.log(`No matching driver found for name ${selectedDriverName}.`);
+                      // Handle the case when no matching driver is found
+                    }
+                  })
+                  .catch((error) => {
+                    console.error(`Error querying database: ${error}`);
+                  });
+              });
+
+      });
+
+
+
+
+        /*// Reference to the 'drivers' in Firebase
+        const driversRef = firebase.database().ref('driverRegForm');
+
+        // Function to populate the driver dropdown options
+        function populateDriverDropdown() {
+          const driverDropdowns = document.querySelectorAll('.driver-dropdown');
+          console.log("Populating driver dropdown...");
+        
+          // Clear existing options
+          driverDropdowns.forEach((dropdown) => {
+            dropdown.innerHTML = '';
+          });
+      
+          // Retrieve drivers from Firebase and populate the dropdowns
+          driversRef.once('value', (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+              const driverData = childSnapshot.val();
+              const driverName = driverData.driver_name; // Replace with the actual field in your database
+            
+              driverDropdowns.forEach((dropdown) => {
+                const option = document.createElement('option');
+                option.value = driverName;
+                option.textContent = driverName;
+                dropdown.appendChild(option);
+              });
+            });
+          });
+          console.log("Driver dropdown populated.");
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDriverDropdown();
+        });*/
+
+    const deleteButton = row.querySelector('.delete-button');
+        deleteButton.addEventListener('click', () => {
+          const plateNumberToDelete = deleteButton.getAttribute('data-plate-number');
+          const vehicleRef = firebase.database().ref('vehicleRegForm');
+        
+          // Find the vehicle record by plate number and delete it from Firebase
+          vehicleRef.orderByChild('plateNum').equalTo(plateNumberToDelete).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+              snapshot.forEach((childSnapshot) => {
+                const vehicleKeyToDelete = childSnapshot.key;
+            
+                // Delete the vehicle node using the key
+                vehicleRef.child(vehicleKeyToDelete).remove()
+                  .then(() => {
+                    console.log(`Vehicle with plate number ${plateNumberToDelete} deleted successfully.`);
+                  })
+                  .catch((error) => {
+                    console.error(`Error deleting vehicle: ${error}`);
+                  });
+              });
+            } else {
+              console.error(`No vehicle found with plate number ${plateNumberToDelete}`);
+            }
+          });
+        });
+        vehicleTableBody.appendChild(row);
+      });
+    });
+  }
+  
+  window.addEventListener('load', displayRegisteredVehicles);
+    </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
+    <script src = "addvehicle.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/vehicles.css">
+    <title>Vehicles</title>
+</head>
+<body>
+    <style>
+        .homeIcon{
+            height: 17px;
+        }
+        .list-item{
+            display: flex;
+            align-items: center;
+        }
+        .list-item .homeIcon{
+            margin-right: 10px;
+        }
+        .vehicleIcon{
+            height: 17px;
+        }
+        .list-item .vehicleIcon{
+            margin-right: 10px
+        }
+        .registerIcon{
+            height: 17px;
+        }
+        .list-item .registerIcon{
+            margin-right: 10px;
+        }
+        .driversIcon{
+            height: 17px;
+        }
+        .list-item .driversIcon{
+            margin-right: 10px;
+        }
+        .logoutIcon{
+            height: 17px;
+        }
+        .list-item .logoutIcon{
+            margin-right: 10px;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;   
+            padding-top: 45px;
+            background-color: #739072;
+            color: #fff;
+            position: fixed;
+            margin-top: -50px;
+            left: -250px;
+            transition: left 0.3s;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+            margin-top: 45px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+        
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+        .vehicle-list h2 {
+            text-align: center; /* Center the <h2> element text */
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        /* Set the background image for the menu button */
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        body {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Center vertically */
+            height: 100vh; /* Ensure full viewport height */
+            margin-top: 0px;
+        }
+
+        .container {
+            width: 1000px; /* Adjust the width as needed */
+            padding: 10px;
+            padding-top: 0px;
+            border: 2px solid #333; /* Add a border */
+            border-radius: 10px; /* Add rounded corners */
+            margin-left:150px ;
+            margin-top: 30px;
+        }
+        .vehicle-list h2{
+            font-size: 30px;
+        }
+
+        .vehicle-list {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding-left: 60px;
+            text-decoration: none !important;
+            color: #333;
+        }
+
+        .vehicle-list ul {
+            list-style:square;
+            padding: 0;
+        }
+
+        .vehicle-list ul li {
+            margin: 5px 0;
+            font-size: 20px;
+            text-decoration: none !important;
+        }
+        .vehicle-list ul li a {
+            margin: 5px 0;
+            font-size:23px;
+            text-decoration: none;
+            color: #333;
+        }
+        .vehicle-list ul li a:hover {
+            background-color: #169ef8; /* Change the background color on hover */
+            font-weight: bold;
+            font-size: 25px; /* Increase font weight on hover */
+        }
+
+
+        /* Style for clickable containers */
+        .clickable-container {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #0074d9;
+            border-radius: 5px;
+            background-color: #0074d9;
+            color: #fff;
+            text-decoration:none !important;
+            display: inline-block;
+        }
+    </style>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class = "list-item">
+                <img src="home.png" alt="Home Icon" class = "homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="#">Vehicles</a>
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "register.png" alt = "Register Icon" class = "registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Add Driver Icon" class = "driversIcon">
+                <a href = "addDriver.html?">Add Driver</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class = "list-item">
+                <img src = "maintenance.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="absent.html">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class = "list-item">
+                <img src = "logout.png" alt = "Logout Icon" class = "logoutIcon">
+                <a href="#" id = "logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+    </div>
+    <div class="container">
+        <div class="vehicle-list">
+            <h2>Vehicle Plate Numbers</h2>
+            <ul id="plateNumbersList">
+                <!-- Vehicle plate numbers will be added here dynamically as clickable containers -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            auth.signOut().then(() => {
+            window.location.href = 'index.html';
+            alert('Logout Successful')
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+
+    </script>
+    <script type = "module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const deployedVehiclesRef = ref(db, "deployedVehicles");
+
+        onValue(deployedVehiclesRef, (snapshot) => {
+        const deployedVehicles = snapshot.val();
+
+        // Process the retrieved data
+            for (const plateNum in deployedVehicles) {
+                const vehicleData = deployedVehicles[plateNum];
+                console.log("Plate Number:", plateNum);
+                console.log("Model:", vehicleData.model);
+                console.log("Seats Available:", vehicleData.seatsAvail);
+                console.log("Selected Time:", vehicleData.selectedTime);
+                // Add code to display or use the data as needed
+                }
+        });
+        // Get a reference to the <ul> element where you want to display the plate numbers
+        const plateNumbersList = document.getElementById("plateNumbersList");
+
+        function createPlateNumberLink(plateNumber) {
+            const listItem = document.createElement("li");
+            const link = document.createElement("a");
+            link.textContent = plateNumber;
+            link.href = `seats.html?plateNumber=${plateNumber}`;
+            listItem.appendChild(link);
+            plateNumbersList.appendChild(listItem);
+        }
+
+        // Listen for changes in the deployedVehicles node
+        onValue(deployedVehiclesRef, (snapshot) => {
+            const deployedVehicles = snapshot.val();
+
+            // Clear the list to prevent duplicates
+            plateNumbersList.innerHTML = "";
+
+            // Process the retrieved data and dynamically generate links
+            for (const plateNumber in deployedVehicles) {
+                createPlateNumberLink(plateNumber);
+            }
+        });
+    </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src = "regvehicledb.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

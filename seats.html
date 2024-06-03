@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/seats.css">
+    <title>Available Seats</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>AVAILABLE SEATS</h2>
+        <div id="seatsContainer">
+            <!-- Seats will be added here dynamically -->
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            function generateSeats(numberOfSeats) {
+                const seatsContainer = document.getElementById("seatsContainer");
+                const plateNumber = urlParams.get("plateNumber");
+                const availableVehiclesRef = ref(db, "availableVehicles");
+                const availableSeatsRef = ref(db, `availableSeats/${plateNumber}/seats`);
+                const bookedTimeRef = ref(db, `bookedTimePerSlot/${plateNumber}`);
+
+                const seatsData = [];
+
+                for (let i = 1; i <= numberOfSeats; i++) {
+                    const seatContainer = document.createElement("div");
+                    seatContainer.className = "seat-container";
+                    const seatId = `${plateNumber}-${i}`;
+
+                    const seat = document.createElement("div");
+                    seat.textContent = seatId;
+                    seat.className = "seat";
+                    seatContainer.appendChild(seat);
+                    seatsContainer.appendChild(seatContainer);
+
+                    seatsData[seatId] = { status: "Available" };
+                    console.log(seatId);    
+                }
+
+                // Save seats data under availableSeatsRef
+                set(availableSeatsRef, seatsData)
+                    .then(() => {
+                        console.log("Available seats data saved");
+                    })
+                    .catch((error) => {
+                        console.error("Error saving available seats data:", error);
+                    });
+
+                    set(bookedTimeRef, seatsData)
+                    .then(() => {
+                        console.log("Available seats data saved");
+                    })
+                    .catch((error) => {
+                        console.error("Error saving available seats data:", error);
+                    });
+            }
+
+
+
+
+
+
+            // Get the plate number from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const plateNumber = urlParams.get("plateNumber");
+
+            if (!plateNumber) {
+                const errorElement = document.createElement("div");
+                errorElement.textContent = "Plate number not specified.";
+                const container = document.getElementById("seatsContainer");
+                container.appendChild(errorElement);
+            }
+
+            const deployedVehiclesRef = ref(db, "deployedVehicles");
+
+            onValue(deployedVehiclesRef, (snapshot) => {
+                const deployedVehicles = snapshot.val();
+
+                // Process the retrieved data for the selected plate number
+                if (plateNumber && deployedVehicles[plateNumber]) {
+                    const vehicleData = deployedVehicles[plateNumber];
+                    const numberOfSeats = vehicleData.seatsAvail;
+
+                    // Generate seats based on the number of seats for the selected plate number
+                    generateSeats(numberOfSeats);
+                } else {
+                    // Handle the case where the plate number does not exist in the database
+                    const errorElement = document.createElement("div");
+                    errorElement.textContent = "Plate number not found in the database.";
+                    const container = document.getElementById("seatsContainer");
+                    container.appendChild(errorElement);
+                }
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>

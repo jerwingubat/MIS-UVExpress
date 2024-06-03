@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <title>Absence Letters</title>
+</head>
+<script>
+    // Function to close the popup and delete the value of the 'letters' property
+    // Function to close the popup and delete the value of the 'letters' property
+    function closePopup(driverName) {
+
+        document.getElementById('customPopup').style.display = 'none';
+        document.body.classList.remove('popup-open');
+
+        const lettersRef = firebase.database().ref('absentLetters');
+
+        // Check if driverName is defined before executing the query
+        if (driverName) {
+            // Find the letters record by driver's name and update the 'letters' property to null
+            lettersRef.orderByChild('fname').equalTo(driverName).once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const nodeKeyToUpdate = childSnapshot.key;
+                        lettersRef.child(nodeKeyToUpdate).child('letter').set(null) // Set 'letter' property to null
+                            .then(() => {
+                                console.log(`Letters for ${driverName} deleted successfully.`);
+                            })
+                            .catch((error) => {
+                                console.error(`Error deleting letters for ${driverName}: ${error}`);
+                            });
+                    });
+                } else {
+                    console.error(`No letters found for driver ${driverName}`);
+                }
+            });
+        }
+    }
+
+
+</script>
+
+<body>
+    <style>
+        .homeIcon {
+            height: 17px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item .homeIcon {
+            margin-right: 10px;
+        }
+
+        .vehicleIcon {
+            height: 17px;
+        }
+
+        .list-item .vehicleIcon {
+            margin-right: 10px
+        }
+
+        .registerIcon {
+            height: 17px;
+        }
+
+        .list-item .registerIcon {
+            margin-right: 10px;
+        }
+
+        .driversIcon {
+            height: 17px;
+        }
+
+        .list-item .driversIcon {
+            margin-right: 10px;
+        }
+
+        .logoutIcon {
+            height: 17px;
+        }
+
+        .list-item .logoutIcon {
+            margin-right: 10px;
+        }
+
+        .bgimage {
+            width: 100%;
+            height: 100vh;
+            background-image: url('indexbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            padding-top: 45px;
+            background-color: #739072;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            top: 20px;
+            left: 20px;
+            margin-top: -70px;
+        }
+
+        .registered-drivers {
+            text-align: center;
+            margin: 0 auto;
+            width: 80%;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+
+        /* Style the table within the container */
+        #driversTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            /* Adjust the margin as needed */
+        }
+
+        #driversTable th,
+        #driversTable td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        #driversTable th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        #driversTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #driversTable tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .delete-button {
+            background-color: #3af296;
+            color: white;
+            height: 35px;
+            width: 70px;
+            border: none;
+            border-radius: 5px
+        }
+
+        /* Add this CSS for the popup styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Add styles to hide scrollbar when popup is open */
+        body.popup-open {
+            overflow: hidden;
+        }
+    </style>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class="list-item">
+                <img src="home.png" alt="Home Icon" class="homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+              </li>
+            <li class="list-item">
+                <img src="car.png" alt="Vehicle Icon" class="vehicleIcon">
+                <a href="vehicles.html">Vehicles</a>
+            </li>
+            <li class="list-item">
+                <img src="car.png" alt="Vehicle Icon" class="vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class="list-item">
+                <img src="register.png" alt="Register Icon" class="registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class="list-item">
+                <img src="drivers.png" alt="Add Driver Icon" class="driversIcon">
+                <a href="addDriver.html?">Add Driver</a>
+            </li>
+            <li class="list-item">
+                <img src="drivers.png" alt="Drivers Icon" class="driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class="list-item">
+                <img src="maintenance.png" alt="Drivers Icon" class="driversIcon">
+                <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="#">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="logout.png" alt="Logout Icon" class="logoutIcon">
+                <a href="#" id="logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+    </div>
+    <div id="customPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2 id="popupTitle">Driver Letters</h2>
+            <p id="popupContent"></p>
+        </div>
+    </div>
+    <div class="registered-drivers">
+        <h2>Registered Drivers</h2>
+        <table id="driversTable">
+            <thead>
+                <tr>
+                    <th>Driver Name </th>
+                    <th>License Number</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="driversTableBody">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button data-vehicle-id="${childSnapshot.key}" data-plate-number="${vehicleData.plateNum}"
+                            class="delete-button">Show Letter</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+                alert('Logout Successful')
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        function displayRegisteredDrivers() {
+
+            const driversTableBody = document.getElementById('driversTableBody');
+
+            const vehicleRef = ref(db, 'driverRegForm');
+
+            onValue(vehicleRef, (snapshot) => {
+                driversTableBody.innerHTML = '';
+                const itemsToDelete = [];
+
+                snapshot.forEach((childSnapshot) => {
+                    const driversData = childSnapshot.val();
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                <td>${driversData.driver_name}</td>
+                <td>${driversData.license_number}</td>
+                <td>${driversData.driver_age}</td>
+                <td>${driversData.driver_address}</td>
+                <td>
+                    <button data-vehicle-id="${childSnapshot.key}" data-plate-number="${driversData.license_number}" class="delete-button">Show Letter</button>
+                </td>
+              `;
+
+                    const deleteButton = row.querySelector('.delete-button');
+                    deleteButton.addEventListener('click', () => {
+                        const driverName = driversData.driver_name; // Get the driver's name
+                        const lettersRef = firebase.database().ref('absentLetters');
+
+                        // Find the letters record by driver's name and display it in the popup
+                        lettersRef.orderByChild('fname').equalTo(driverName).once('value', (snapshot) => {
+                            if (snapshot.exists()) {
+                                let letters = '';
+                                snapshot.forEach((childSnapshot) => {
+                                    const lettersData = childSnapshot.val();
+                                    letters = lettersData.letter;
+                                });
+
+                                // Display the custom popup
+                                openPopup(driverName, letters);
+                            } else {
+                                console.error(`No letters found for driver ${driverName}`);
+                            }
+                        });
+                    });
+                    driversTableBody.appendChild(row);
+                });
+            });
+        }
+        function openPopup(driverName, letters) {
+            document.getElementById('popupTitle').textContent = `Letters for ${driverName}`;
+            document.getElementById('popupContent').textContent = letters;
+            document.getElementById('customPopup').style.display = 'block';
+            document.body.classList.add('popup-open');
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById('customPopup').style.display = 'none';
+            document.body.classList.remove('popup-open');
+        }
+
+        window.addEventListener('load', displayRegisteredDrivers);
+
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="regvehicledb.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

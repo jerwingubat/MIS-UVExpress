@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/login.css">
+
+    <title>Login</title>
+</head>
+
+<body>
+    <style>
+        .bgimage {
+            width: 100%;
+            height: 100vh;
+            background-image: url('indexbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+            filter: blur(5px);
+        }
+
+        #tellerLoginButton {
+            background-color: #3A4D39;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+    </style>
+    <div class="bgimage"></div>
+    <div class="login-container">
+        <h2>Teller Login</h2>
+        <form id="loginForm"  data-role="teller">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <input type="checkbox" id="showPassword"><a class="show-password-label">Show Password</a>
+            </div>
+            <button type="submit" id="loginbutton">Login</button>
+        </form>
+        <button id="tellerLoginButton">Admin Login</button>
+
+        <div id="alertMessage" class="custom-alert"></div>
+        <div class="loading-animation" id="loading-animation">
+            <div class="loader"></div>
+            Loading...
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script>
+        const showPasswordCheckbox = document.getElementById("showPassword");
+        const passwordInput = document.getElementById("password");
+
+        showPasswordCheckbox.addEventListener("change", function () {
+            if (showPasswordCheckbox.checked) {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+
+        document.getElementById("tellerLoginButton").addEventListener("click", function () {
+            window.location.href = "index.html";
+        });
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        var loginFormDB = firebase.database().ref("loginForm");
+        document.getElementById('loginForm').addEventListener('submit', submitForm);
+
+        function submitForm(e) {
+            e.preventDefault();
+            document.getElementById("loading-animation").style.display = "block";
+
+            var user = getElementVal('username');
+            var pass = getElementVal('password');
+
+            // Get the role from the data-role attribute
+            var role = document.getElementById('loginForm').dataset.role;
+
+            auth.signInWithEmailAndPassword(user, pass)
+                .then((userCredential) => {
+                    var user = userCredential.user;
+                    console.log('User signed in:', user);
+
+                    // Check the role before redirecting
+                    if (role === 'admin') {
+                        window.location.href = 'home.html';
+                    } else if (role === 'teller') {
+                        window.location.href = 'teller.html';
+                    }
+
+                    document.getElementById("loading-animation").style.display = "none";
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.error('Authentication error:', errorCode, errorMessage);
+
+                    alert('Login failed\nPlease check your username and password');
+                    document.getElementById("loading-animation").style.display = "none";
+                });
+        }
+
+
+        const getElementVal = (id) => {
+            return document.getElementById(id).value;
+        };
+    </script>
+</body>
+
+</html>

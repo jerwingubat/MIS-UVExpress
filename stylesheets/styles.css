@@ -1,0 +1,115 @@
+/* Reset some default styles */
+body, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /*background: linear-gradient(to bottom, #0074d9, #7FDBFF); /* Gradient from blue to sky blue */
+    background-color: #ECE3CE;
+    background-size: cover; /* Adjust the background image size */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    backdrop-filter: blur(10px);
+    height: 100vh;
+    overflow:hidden;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    height: 100%;   
+    padding-top: 45px;
+    background-color: #739072;
+    color: #fff;
+    top: 0;
+    left: -250px;
+    transition: left 0.3s;
+    margin-top: -60px;
+    overflow-y: auto;
+    position: fixed;
+}
+
+
+
+/* Content Styles */
+.content {
+    margin-top: 0px;
+    margin-left: 0;
+    transition: margin-left 0.3s;
+}
+
+/* Button to toggle the sidebar */
+#toggleSidebar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-top: -50px;
+}
+#toggleSidebarHome {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-top: -35px;
+}
+
+.sidebar.active {
+    left: 0;
+    margin-top: -60px;
+    background-color: #739072;
+    overflow-y: hidden;
+    position: fixed;
+    overflow:hidden;
+}
+
+.content.active {
+    margin-left: 250px;
+}
+.slider {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    margin-top: 30px;
+}
+
+.slider img {
+    width: 40%;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 1s;
+}
+
+.slider img:first-child {
+    z-index: 1;
+}
+.slider img.active {
+    left: 0;
+    z-index: 1;
+}
+.slider img:nth-child(2) {
+    z-index: 0;
+}
+.navigation-button {
+    text-align: center;
+    position: relative;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 10px 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.active,
+.dot:hover {
+    background-color: #717171;
+}

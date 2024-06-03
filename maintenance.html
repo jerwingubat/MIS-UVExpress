@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
+    <link rel="stylesheet" href="stylesheets/maintenance.css"> <!-- You may create a CSS file for styling -->
+    <title>Vehicle Status</title>
+</head>
+<body>
+    <style>
+        .homeIcon{
+            height: 17px;
+        }
+        .list-item{
+            display: flex;
+            align-items: center;
+        }
+        .list-item .homeIcon{
+            margin-right: 10px;
+        }
+        .vehicleIcon{
+            height: 17px;
+        }
+        .list-item .vehicleIcon{
+            margin-right: 10px
+        }
+        .registerIcon{
+            height: 17px;
+        }
+        .list-item .registerIcon{
+            margin-right: 10px;
+        }
+        .driversIcon{
+            height: 17px;
+        }
+        .list-item .driversIcon{
+            margin-right: 10px;
+        }
+        .logoutIcon{
+            height: 17px;
+        }
+        .list-item .logoutIcon{
+            margin-right: 10px;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;   
+            padding-top: 45px;
+            background-color: #739072;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.3s;
+            margin-top: -50px;
+        }
+
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+        
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        /* Set the background image for the menu button */
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .deploy-button {
+          background-color: #21BF73;
+          color: white;
+          height: 35px;
+          width: 70px;
+          border: none;
+          border-radius: 5px;
+        }
+        
+        .delete-button {
+          background-color: #F23A3A;
+          color: white;
+          height: 35px;
+          width: 70px;
+          border: none;
+          border-radius: 5px
+        }
+        #registered-vehicles{
+          margin-top: 30px;
+        }
+        #custom-alert {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #f8d7da;
+          border: 1px solid #f5c6cb;
+          padding: 10px;
+          border-radius: 5px;
+          width: 300px;
+          text-align: center;
+        }
+
+        .close-btn {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          cursor: pointer;
+        }
+
+        #alert-message {
+          margin: 0;
+        }
+    </style>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class = "list-item">
+                <img src="home.png" alt="Home Icon" class = "homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+              </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="vehicles.html">Vehicles</a>
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "register.png" alt = "Register Icon" class = "registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Add Driver Icon" class = "driversIcon">
+                <a href = "addDriver.html?">Add Driver</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class = "list-item">
+                <img src = "maintenance.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="#">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="absent.html">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class = "list-item">
+                <img src = "logout.png" alt = "Logout Icon" class = "logoutIcon">
+                <a href="#" id = "logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="vehicle-status-container">
+        <h2>Vehicle Status</h2>
+        <table id="vehicleStatusTable">
+            <thead>
+                <tr>
+                    <th>Vehicle Model</th>
+                    <th>Vehicle Plate Number</th>
+                    <th>Seats Available</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody id="vehicleStatusTableBody">
+                <!-- Vehicle data will be populated dynamically using JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getDatabase, ref, onValue, set} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDx4wg3HCe1yScsFbBGg1p2J-bKaze4pYw",
+            authDomain: "uvexpress-df56c.firebaseapp.com",
+            databaseURL: "https://uvexpress-df56c-default-rtdb.firebaseio.com",
+            projectId: "uvexpress-df56c",
+            storageBucket: "uvexpress-df56c.appspot.com",
+            messagingSenderId: "58913712320",
+            appId: "1:58913712320:web:6a7b59470abc62f34e2525",
+        }; 
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            auth.signOut().then(() => {
+            window.location.href = 'index.html';
+            alert('Logout Successful')
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const vehicleStatusTableBody = document.getElementById('vehicleStatusTableBody');
+        function displayVehicleStatus() {
+            const vehicleRef = ref(db, 'vehicleRegForm');
+            
+            onValue(vehicleRef, (snapshot) => {
+                vehicleStatusTableBody.innerHTML = '';
+                snapshot.forEach((childSnapshot) => {
+                    const vehicleData = childSnapshot.val();
+                    const plateNum = vehicleData.plateNum; // Add this line to define plateNum
+                
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${vehicleData.model}</td>
+                        <td>${plateNum}</td>
+                        <td>${vehicleData.seatsAvail}</td>
+                        <td>${vehicleData.vehicleStat}</td>
+                        <td>
+                            <select class="status-dropdown" data-vehicle-id="${childSnapshot.key}" data-plate-number="${plateNum}">
+                                <option value = "Available">Available</option>
+                                <option value="Vehicle Coding">Vehicle Coding</option>
+                                <option value="Not Available">Not Available</option>
+                                <option value="Under Maintenance">Under Maintenance</option>
+                                <!-- Add more status options if needed -->
+                            </select>
+                            <button data-vehicle-id="${childSnapshot.key}" data-plate-number="${plateNum}" class="update-status-button">Update</button>
+                        </td>
+                    `;
+                    
+                    const statusDropdown = row.querySelector('.status-dropdown');
+                    const updateStatusButton = row.querySelector('.update-status-button');
+                    
+                    updateStatusButton.addEventListener('click', () => {
+                        const newStatus = statusDropdown.value;
+                        const vehicleStatRef = ref(db, `vehicleRegForm/${plateNum}/vehicleStat`);
+                    
+                        set(vehicleStatRef, newStatus)
+                            .then(() => {
+                                console.log(`Vehicle status updated successfully.`);
+                            })
+                            .catch((error) => {
+                                console.error(`Error updating vehicle status: ${error}`);
+                            });
+                    });
+                
+                    vehicleStatusTableBody.appendChild(row);
+                });
+            });
+        }
+
+        window.addEventListener('load', displayVehicleStatus);
+        
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src = "regvehicledb.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

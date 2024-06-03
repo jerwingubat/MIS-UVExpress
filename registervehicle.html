@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/registervehicle.css">
+    <title>Vehicle Registration</title>
+    <style>
+        .homeIcon{
+            height: 17px;
+        }
+        .list-item{
+            display: flex;
+            align-items: center;
+        }
+        .list-item .homeIcon{
+            margin-right: 10px;
+        }
+        .vehicleIcon{
+            height: 17px;
+        }
+        .list-item .vehicleIcon{
+            margin-right: 10px
+        }
+        .registerIcon{
+            height: 17px;
+        }
+        .list-item .registerIcon{
+            margin-right: 10px;
+        }
+        .driversIcon{
+            height: 17px;
+        }
+        .list-item .driversIcon{
+            margin-right: 10px;
+        }
+        .logoutIcon{
+            height: 17px;
+        }
+        .list-item .logoutIcon{
+            margin-right: 10px;
+        }
+        .bgimage {
+            width: 100%;
+            height: 100vh;
+            background-image: url('indexbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+        }
+        .sidebar .logo {
+            padding: 20px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 1px solid #8cbaff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px 20px;
+        }
+        
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            transition: background-color 0.2s;
+            font-weight: normal;
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #acc7ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .menu-btn {
+            width: 35px;
+            height: 35px;
+            background-image: url('menubtn.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        #addScheduledTime {
+            float: right;
+            margin-right: 10px;
+        }
+        #regButton{
+            float:inline-start;
+        }
+        .removeTimeInput {
+            float: right;
+            clear: right;
+        }
+        .scheduledTimeInput{
+            margin-bottom: 5px;
+            height: fit-content;
+        }
+        .scheduled-time-input{
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">Management System</div>
+        <ul>
+            <li class = "list-item">
+                <img src="home.png" alt="Home Icon" class = "homeIcon">
+                <a href="home.html?">Home</a>
+            </li>
+            <li class="list-item">
+                <img src="event.png" alt="Home Icon" class="homeIcon">
+                <a href="event_planner.html">Event Planner</a>
+              </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="vehicles.html">Vehicles</a>    
+            </li>
+            <li class = "list-item">
+                <img src = "car.png" alt = "Vehicle Icon" class = "vehicleIcon">
+                <a href="addvehicle.html">Add Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "register.png" alt = "Register Icon" class = "registerIcon">
+                <a href="registervehicle.html">Register Vehicle</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Add Driver Icon" class = "driversIcon">
+                <a href = "addDriver.html?">Add Driver</a>
+            </li>
+            <li class = "list-item">
+                <img src = "drivers.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="drivers.html">Drivers</a>
+            </li>
+            <li class = "list-item">
+                <img src = "maintenance.png" alt = "Drivers Icon" class = "driversIcon">
+                <a href="maintenance.html">Update Vehicle Status</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="attendance.html">Teller Attendance Record</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="absent.html">Absence Letters</a>
+            </li>
+            <li class="list-item">
+                <img src="report.png" alt="Drivers Icon" class="driversIcon">
+                <a href="dispatch.html">Dispatch Attendance Record</a>
+            </li>
+            <li class = "list-item">
+                <img src = "logout.png" alt = "Logout Icon" class = "logoutIcon">
+                <a href="#" id = "logoutBtn">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <button id="toggleSidebar" class="menu-btn"></button>
+        <h1>Vehicle Registration</h1>
+        <div class="registration-form">
+            <h2>Register Vehicle</h2>
+            <form id="vehicleRegForm">
+                <div class="form-group">
+                    <label for="vehicleModel">Vehicle Model:</label>
+                    <input type="text" id="vehicleModel" name="vehicleModel" style="text-transform: uppercase;" required>
+                </div>
+                <div class="form-group">
+                    <label for="plateNumber">Vehicle Plate Number:</label>
+                    <input type="text" id="plateNumber" name="plateNumber" style="text-transform: uppercase;" required>
+                </div>
+                <div class="form-group">
+                    <label for="seatsAvailable">Vehicle Seats Available:</label>
+                    <input type="number" id="seatsAvailable" name="seatsAvailable" min="0" max="15" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleStatus">Vehicle Status:</label>
+                    <select id="vehicleStatus" name="vehicleStatus" required>
+                        <option value="Available">Available</option>
+                        <option value="On-Duty">On Duty</option>
+                    </select>
+                </div>
+                <div class="form-group" id="scheduledTimesContainer">
+                    <label for="scheduledTime">Scheduled Time(s):</label>
+                    <div class="scheduled-time-input">
+                        <input type="time" class="scheduledTimeInput" name="scheduledTime[]" required>
+                        <button type="button" class="removeTimeInput">Remove</button>
+                    </div>
+                </div>
+                
+                <button type="button" id="addScheduledTime">Add Scheduled Time</button>
+                <button type="submit" id="regButton">Register</button>
+            </form>
+        </div>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="regvehicledb.js"></script>
+    <script src="registervehicle.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const scheduledTimesContainer = document.getElementById("scheduledTimesContainer");
+            const addScheduledTimeButton = document.getElementById("addScheduledTime");
+
+            addScheduledTimeButton.addEventListener("click", function () {
+                const newScheduledTimeInput = document.createElement("div");
+                newScheduledTimeInput.classList.add("scheduled-time-input");
+
+                newScheduledTimeInput.innerHTML = `
+                    <input type="time" class="scheduledTimeInput" name="scheduledTime[]" required>
+                    <button type="button" class="removeTimeInput">Remove</button>
+                `;
+
+                scheduledTimesContainer.appendChild(newScheduledTimeInput);
+
+                // Add event listener to the "Remove" button
+                const removeTimeInputButton = newScheduledTimeInput.querySelector(".removeTimeInput");
+                removeTimeInputButton.addEventListener("click", function () {
+                    scheduledTimesContainer.removeChild(newScheduledTimeInput);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
